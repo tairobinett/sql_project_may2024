@@ -1,5 +1,6 @@
 import psycopg2
 import time
+import os
 
 # Retry connection to ensure DB is up
 while True:
@@ -33,6 +34,19 @@ sql = '''CREATE TABLE IF NOT EXISTS dice_rolls(
 );'''
 
 cursor.execute(sql)
+
+print("Current active directory:", os.getcwd())
+print("Contents of backend directory:", os.listdir("/app"))
+print("Contents of dice-stats directory:", os.listdir("/app/dice-stats"))
+
+
+sql = '''COPY dice_rolls 
+    FROM '/app/dice-stats/data.csv' 
+    DELIMITER ',' CSV HEADER;
+'''
+
+cursor.execute(sql)
+
 connection.commit()
 cursor.close()
 connection.close()
