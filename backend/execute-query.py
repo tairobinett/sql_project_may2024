@@ -18,10 +18,18 @@ while True:
 
 cursor = connection.cursor()
 
-sql = '''CREATE TABLE IF NOT EXISTS employees(
+sql = '''CREATE TABLE IF NOT EXISTS dice_rolls(
     emp_id INT PRIMARY KEY,
     emp_name VARCHAR(255),
-    salary DECIMAL
+    d2 INT,
+    d3 INT,
+    d4 INT, 
+    d6 INT, 
+    d8 INT,
+    d10 INT, 
+    d12 INT, 
+    d20 INT, 
+    d100 INT 
 );'''
 
 cursor.execute(sql)
