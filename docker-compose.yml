@@ -22,6 +22,8 @@ services:
   frontend:
     build:
       context: ./frontend/my-app
+    depends_on:
+      - backend
     ports:
       - "3000:3000"
 
@@ -32,6 +34,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://user:password@db:5432/mydb
+    ports:
+      - "5000:5000"
 
 volumes:
   pgdata:

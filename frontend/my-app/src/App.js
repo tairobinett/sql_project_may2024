@@ -7,7 +7,7 @@ function App() {
   const handleClick = async () => {
     console.log("clciked");
     try{
-      const response = await axios.get('backend:5000');
+      const response = await axios.get('127.0.0.1:5000');
       console.log(response);
     }catch(error){
       console.log("There was an error" + error);

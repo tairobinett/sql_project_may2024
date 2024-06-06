@@ -11,7 +11,10 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run flask API on port 5000
-CMD ["flask", "--app", "main", "run"]
+CMD ["flask", "--app", "main", "run", "--host=0.0.0.0", "--port", "5000"]
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
  
 # Make port 8000 available to the world outside this container
 # EXPOSE 8000
