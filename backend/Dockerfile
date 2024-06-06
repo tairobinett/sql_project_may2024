@@ -9,6 +9,9 @@ COPY . .
  
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Run flask API on port 5000
+CMD ["flask", "--app", "main", "run"]
  
 # Make port 8000 available to the world outside this container
 # EXPOSE 8000
@@ -16,4 +19,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Command to run your application
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
-CMD ["python", "execute-query.py"]
+# CMD ["python", "execute-query.py"]

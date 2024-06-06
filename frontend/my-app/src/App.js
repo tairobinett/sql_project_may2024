@@ -1,9 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+
 
 function App() {
-  const handleClick = () => {
-    console.log("Hello world!");
+  const handleClick = async () => {
+    console.log("clciked");
+    try{
+      const response = await axios.get('backend:5000');
+      console.log(response);
+    }catch(error){
+      console.log("There was an error" + error);
+    }
   }
 
   return (
