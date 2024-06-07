@@ -7,7 +7,17 @@ function App() {
   const handleClick = async () => {
     console.log("clciked");
     try{
-      const response = await axios.get('127.0.0.1:5000');
+      const response = await axios.get('http://127.0.0.1:5000');
+      console.log(response);
+    }catch(error){
+      console.log("There was an error" + error);
+    }
+  }
+
+  const handleCreateTable = async () => {
+    console.log("createtable");
+    try{
+      const response = await axios.get('http://127.0.0.1:5000/create_table');
       console.log(response);
     }catch(error){
       console.log("There was an error" + error);
@@ -22,6 +32,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <button onClick={handleClick}>Click me!</button>
+        <button onClick={handleCreateTable}>create table button</button>
         <a
           className="App-link"
           href="https://reactjs.org"
