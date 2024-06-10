@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
 import time
@@ -19,6 +19,7 @@ def gb_world():
 
 @app.route("/create_table")
 def create_table(): 
+    tableName = request.args.get('tableName')
     # Retry connection to ensure DB is up
     print("start function")
     while True:
@@ -37,7 +38,7 @@ def create_table():
 
     cursor = connection.cursor()
 
-    sql = '''CREATE TABLE IF NOT EXISTS dice_rolls(
+    sql = f'''CREATE TABLE IF NOT EXISTS {tableName}(
         emp_id INT PRIMARY KEY,
         emp_name VARCHAR(255),
         die_type INT,
@@ -55,4 +56,4 @@ def create_table():
     cursor.execute(sql)
 
     connection.commit()
-    return "200"
+    return jsonify({"status":"success", "tableName":tableName}), 200
