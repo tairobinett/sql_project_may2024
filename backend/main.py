@@ -17,9 +17,11 @@ def gb_world():
     return "<p>Goodbye World!</p>"
 
 
-@app.route("/create_table")
+@app.route("/create_table", methods=['POST'])
 def create_table(): 
-    tableName = request.args.get('tableName')
+    data = request.get_json()
+    tableName = data.get('tableName')
+    # tableName = request.args.get('tableName')
     # Retry connection to ensure DB is up
     print("start function")
     while True:
