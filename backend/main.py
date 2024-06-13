@@ -41,18 +41,9 @@ def create_table():
     cursor = connection.cursor()
 
     sql = f'''CREATE TABLE IF NOT EXISTS {tableName}(
-        emp_id INT PRIMARY KEY,
-        emp_name VARCHAR(255),
-        die_type INT,
-        d2 INT,
-        d3 INT,
-        d4 INT, 
-        d6 INT, 
-        d8 INT,
-        d10 INT, 
-        d12 INT, 
-        d20 INT, 
-        d100 INT 
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100),
+        major VARCHAR(100)
     );'''
 
     cursor.execute(sql)
