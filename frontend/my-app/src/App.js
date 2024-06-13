@@ -8,6 +8,10 @@ function App() {
   const [tableNameToCreate, setTableNameToCreate] = useState('');
   const [tableNameToDelete, setTableNameToDelete] = useState('');
 
+  const [tableNameToAddStudent, setTableNameToAddStudent] = useState('');
+  const [studentName, setStudentName] = useState('');
+  const [studentMajor, setStudentMajor] = useState('');
+
   const handleCreateTable = async () => {
     console.log("createtable, tableName = " + tableNameToCreate);
     try{
@@ -42,6 +46,24 @@ function App() {
     }
   }
 
+  const handleAddStudent = async () => {
+    console.log("addstudent, tableName = " + tableNameToAddStudent);
+    try{
+      const response = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:5000/add_student',
+        data: {
+          tableName: tableNameToAddStudent,
+          studentName: studentName, 
+          studentMajor: studentMajor,
+        }
+      });
+      console.log(response);
+    }catch(error){
+      console.log("There was an error" + error);
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -64,6 +86,26 @@ function App() {
           setTableNameToDelete(e.target.value)} 
           placeholder="Enter table name to delete" />
         <button onClick={handleDeleteTable}>delete table button</button>
+
+        <input 
+          type="text" 
+          value={tableNameToAddStudent} 
+          onChange={(e) => 
+          setTableNameToAddStudent(e.target.value)} 
+          placeholder="Enter name of table to add student to" />
+        <input 
+          type="text" 
+          value={studentName} 
+          onChange={(e) => 
+          setStudentName(e.target.value)} 
+          placeholder="Enter student name" />
+        <input 
+          type="text" 
+          value={studentMajor} 
+          onChange={(e) => 
+          setStudentMajor(e.target.value)} 
+          placeholder="Enter student major" />
+        <button onClick={handleAddStudent}>add student button</button>
 
         <a
           className="App-link"

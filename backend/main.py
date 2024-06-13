@@ -56,7 +56,6 @@ def create_table():
 def delete_table(): 
     data = request.get_json()
     tableName = data.get('tableName')
-    # tableName = request.args.get('tableName')
     # Retry connection to ensure DB is up
     print("start function")
     while True:
@@ -76,6 +75,37 @@ def delete_table():
     cursor = connection.cursor()
 
     sql = f'''DROP TABLE IF EXISTS {tableName};'''
+
+    cursor.execute(sql)
+
+    connection.commit()
+    return jsonify({"status":"success", "tableName":tableName}), 200
+
+@app.route("/add_student", methods=['POST'])
+def add_table(): 
+    data = request.get_json()
+    tableName = data.get('tableName')
+    studentName = data.get('studentName')
+    studentMajor = data.get('studentMajor')
+    # Retry connection to ensure DB is up
+    print("start function")
+    while True:
+        try:
+            connection = psycopg2.connect(
+                dbname='mydb',
+                user='postgres',
+                password='Password1',
+                host='db',
+                port='5432'
+            )
+            break
+        except psycopg2.OperationalError:
+            print("Database not ready, retrying in 5 seconds...")
+            time.sleep(5)
+
+    cursor = connection.cursor()
+
+    sql = f'''INSERT INTO {tableName} (name, major) VALUES ('{studentName}', '{studentMajor}');'''
 
     cursor.execute(sql)
 
