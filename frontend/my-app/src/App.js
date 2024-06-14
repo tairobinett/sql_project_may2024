@@ -12,6 +12,10 @@ function App() {
   const [studentName, setStudentName] = useState('');
   const [studentMajor, setStudentMajor] = useState('');
 
+  //TODO: get student(s) by name, get student by id, get student(s) by major, remove student by id
+  const [tableNameToGetStudent, setTableNameToGetStudent] = useState('');
+  const [studentId, setStudentId] = useState('');
+
   const handleCreateTable = async () => {
     console.log("createtable, tableName = " + tableNameToCreate);
     try{
@@ -64,6 +68,24 @@ function App() {
     }
   }
 
+  const handleGetStudent = async () => {
+    console.log("addstudent, tableName = " + tableNameToGetStudent);
+    try{
+      const response = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:5000/get_student',
+        data: {
+          tableName: tableNameToGetStudent,
+          studentId: studentId, 
+
+        }
+      });
+      console.log(response);
+    }catch(error){
+      console.log("There was an error" + error);
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -71,7 +93,8 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <input 
+
+        <input //create table
           type="text" 
           value={tableNameToCreate} 
           onChange={(e) => 
@@ -79,7 +102,7 @@ function App() {
           placeholder="Enter table name to create" />
         <button onClick={handleCreateTable}>create table button</button>
 
-        <input 
+        <input //delete table
           type="text" 
           value={tableNameToDelete} 
           onChange={(e) => 
@@ -87,7 +110,7 @@ function App() {
           placeholder="Enter table name to delete" />
         <button onClick={handleDeleteTable}>delete table button</button>
 
-        <input 
+        <input //add student
           type="text" 
           value={tableNameToAddStudent} 
           onChange={(e) => 
@@ -106,6 +129,20 @@ function App() {
           setStudentMajor(e.target.value)} 
           placeholder="Enter student major" />
         <button onClick={handleAddStudent}>add student button</button>
+
+        <input //get student by id
+          type="text" 
+          value={tableNameToGetStudent} 
+          onChange={(e) => 
+          setTableNameToGetStudent(e.target.value)} 
+          placeholder="Enter name of table to get student from" />
+        <input 
+          type="text" 
+          value={studentId} 
+          onChange={(e) => 
+          setStudentId(e.target.value)} 
+          placeholder="Enter student id" />
+        <button onClick={handleGetStudent}>get student by id button</button>
 
         <a
           className="App-link"

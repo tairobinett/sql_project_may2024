@@ -82,7 +82,7 @@ def delete_table():
     return jsonify({"status":"success", "tableName":tableName}), 200
 
 @app.route("/add_student", methods=['POST'])
-def add_table(): 
+def add_student(): 
     data = request.get_json()
     tableName = data.get('tableName')
     studentName = data.get('studentName')
@@ -106,6 +106,36 @@ def add_table():
     cursor = connection.cursor()
 
     sql = f'''INSERT INTO {tableName} (name, major) VALUES ('{studentName}', '{studentMajor}');'''
+
+    cursor.execute(sql)
+
+    connection.commit()
+    return jsonify({"status":"success", "tableName":tableName}), 200
+
+@app.route("/get_student", methods=['GET'])
+def get_student(): 
+    data = request.get_json()
+    tableName = data.get('tableName')
+    studentId = data.get('studentId')
+    # Retry connection to ensure DB is up
+    print("start function")
+    while True:
+        try:
+            connection = psycopg2.connect(
+                dbname='mydb',
+                user='postgres',
+                password='Password1',
+                host='db',
+                port='5432'
+            )
+            break
+        except psycopg2.OperationalError:
+            print("Database not ready, retrying in 5 seconds...")
+            time.sleep(5)
+
+    cursor = connection.cursor()
+
+    sql = f'''SELECT * FROM {tableName} WHERE id = {studentId};'''
 
     cursor.execute(sql)
 
