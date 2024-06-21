@@ -112,32 +112,32 @@ def add_student():
     connection.commit()
     return jsonify({"status":"success", "tableName":tableName}), 200
 
-@app.route("/get_student", methods=['GET'])
-def get_student(): 
-    data = request.get_json()
-    tableName = data.get('tableName')
-    studentId = data.get('studentId')
+#@app.route("/get_student", methods=['GET'])
+#def get_student(): 
+#    data = request.get_json()
+#    tableName = request.args.get('tableName')
+#    studentId = request.args.get('studentId')
     # Retry connection to ensure DB is up
-    print("start function")
-    while True:
-        try:
-            connection = psycopg2.connect(
-                dbname='mydb',
-                user='postgres',
-                password='Password1',
-                host='db',
-                port='5432'
-            )
-            break
-        except psycopg2.OperationalError:
-            print("Database not ready, retrying in 5 seconds...")
-            time.sleep(5)
+#    print("start function")
+#    while True:
+#        try:
+#            connection = psycopg2.connect(
+#                dbname='mydb',
+#                user='postgres',
+#                password='Password1',
+#                host='db',
+#                port='5432'
+#            )
+#            break
+#        except psycopg2.OperationalError:
+#            print("Database not ready, retrying in 5 seconds...")
+#            time.sleep(5)
 
-    cursor = connection.cursor()
+#    cursor = connection.cursor()
 
-    sql = f'''SELECT * FROM {tableName} WHERE id = {studentId};'''
+#    sql = f'''SELECT * FROM {tableName} WHERE id = {studentId};'''
 
-    cursor.execute(sql)
+#    cursor.execute(sql)
 
-    connection.commit()
-    return jsonify({"status":"success", "tableName":tableName}), 200
+#    connection.commit()
+#    return jsonify({"status":"success", "tableName":tableName}), 200
